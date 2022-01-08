@@ -1,0 +1,23 @@
+.chart_container {
+    display: flex;
+    height: inherit;
+}
+
+.bars_container {
+    width: 100%;
+    margin-left: 10px;
+    height: inherit;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+}
+
+.bar {
+    margin-right: 2px;
+    margin-left: 2px;
+    background-color: aquamarine;
+}
+
+.highlighted_bar {
+    background-color: violet;
+}

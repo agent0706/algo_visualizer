@@ -1,0 +1,9 @@
+.divider {
+    border-top: 1px solid black;
+}
+
+.divider_vertical {
+    height: inherit;
+    width: 1px;
+    border-left: 1px solid black;
+}
