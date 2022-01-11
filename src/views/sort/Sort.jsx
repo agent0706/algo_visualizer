@@ -14,14 +14,12 @@ const Sort = (props => {
     const [dataSize, updateDataSize] = useState(50);
     const [intervalSpeed, updateIntervalSpeed] = useState(20);
     const [isSortRunning, updateIsSortRunning] = useState(false);
-    const [intervalId, setIntervalId] = useState(null);
     const [comparisonCount, updateComparisonCount] = useState(0);
     const data = useRef([]);
     const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     useEffect(() => {
         data.current = getRandomArray(dataSize);
-        setIntervalId(null);
         updateIsSortRunning(false);
         updateComparisonCount(0);
         forceUpdate();
@@ -31,8 +29,6 @@ const Sort = (props => {
         return {
             data: data.current,
             updateComparisonCount,
-            intervalId,
-            setIntervalId,
             updateIsSortRunning,
             dataSize,
             isSortRunning,
@@ -84,7 +80,7 @@ const Sort = (props => {
                 <div>
                     <div>want to increase array size?</div>
                     <div className="array_size_container">
-                        <input type="range" min={10} max={100} value={dataSize} onChange={handleDataSizeChange} />
+                        <input type="range" min={10} max={200} value={dataSize} onChange={handleDataSizeChange} />
                         <div style={{marginLeft: '10px'}}>{dataSize}</div>
                     </div>
                 </div>

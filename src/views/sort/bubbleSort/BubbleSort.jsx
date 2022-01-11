@@ -11,8 +11,6 @@ const BubbleSort = (props) => {
 
     const {
         data,
-        intervalId,
-        setIntervalId,
         updateIsSortRunning,
         dataSize,
         updateComparisonCount,
@@ -25,7 +23,6 @@ const BubbleSort = (props) => {
     };
 
     const stopSorting = () => {
-        setIntervalId(null);
         updateIsSortRunning(false);
         updateCurrentPosition({i: 0, j: 1});
         iterationCount.current = 0;
@@ -57,12 +54,7 @@ const BubbleSort = (props) => {
 
     useEffect(() => {
         if (isSortRunning) {
-            if (intervalId) {
-                clearInterval(intervalId);
-            }
-            const currentIntervalId = setInterval(performSortStep, intervalSpeed);
-            setIntervalId(currentIntervalId);
-            return () => clearInterval(currentIntervalId);
+            setTimeout(performSortStep, intervalSpeed);
         }
     }, [currentPosition, isSortRunning]);
 
