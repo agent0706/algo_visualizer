@@ -9,12 +9,14 @@ function App() {
   const availableAlgos = [
     {name: 'Selection Sort', value: 'selectionSort'},
     {name: 'Bubble Sort', value: 'bubbleSort'},
+    {name: 'Insertion Sort', value: 'insertionSort'}
   ]
 
   const renderAlgoView = () => {
     switch(currentAlgo) {
       case 'bubbleSort':
       case 'selectionSort':
+      case 'insertionSort':
         return <Algos.Sort sortingAlgo={currentAlgo} />
       default:
         return <Algos.SelectAlgo />

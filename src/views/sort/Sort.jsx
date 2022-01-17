@@ -4,6 +4,7 @@ import './Sort.css';
 import '../../App.css';
 import BubbleSort from './bubbleSort';
 import SelectionSort from './selectionSort';
+import InsertionSort from './insertionSort';
 import SelectAlgorithm from '../selectAlgorithm';
 
 const Sort = (props => {
@@ -42,6 +43,8 @@ const Sort = (props => {
                 return <BubbleSort {...getCommonProps()} />
             case 'selectionSort': 
                 return <SelectionSort {...getCommonProps()} />
+            case 'insertionSort':
+                return <InsertionSort {...getCommonProps()} />
             default:
                 return <SelectAlgorithm />
         }
@@ -80,7 +83,7 @@ const Sort = (props => {
                 <div>
                     <div>want to increase array size?</div>
                     <div className="array_size_container">
-                        <input type="range" min={10} max={200} value={dataSize} onChange={handleDataSizeChange} />
+                        <input type="range" min={10} max={100} value={dataSize} onChange={handleDataSizeChange} />
                         <div style={{marginLeft: '10px'}}>{dataSize}</div>
                     </div>
                 </div>
