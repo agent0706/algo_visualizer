@@ -6,7 +6,8 @@ import '../Sort.css';
 const BubbleSort = (props) => {
 
     const [isSwapHappened, setIsSwapHappened] = useState(true);
-    const [currentPosition, updateCurrentPosition] = useState({i: 0, j: 1});
+    const position = useRef({i: 0, j: 1});
+    const [intervalId, updateIntervalId] = useState(null);
     const iterationCount = useRef(0);
 
     const {
@@ -24,7 +25,7 @@ const BubbleSort = (props) => {
 
     const stopSorting = () => {
         updateIsSortRunning(false);
-        updateCurrentPosition({i: 0, j: 1});
+        position.current = {i: 0, j: 1};
         iterationCount.current = 0;
     };
     
@@ -34,16 +35,16 @@ const BubbleSort = (props) => {
                 stopSorting();
                 return;
             }
-            updateCurrentPosition({i: 0, j: 1});
+            position.current = {i: 0, j: 1};
             setIsSwapHappened(false);
             iterationCount.current += 1;
             return;
         }
-        updateCurrentPosition({i: i + 1, j: j + 1});
+        position.current = {i: i + 1, j: j + 1};
     };
 
     const performSortStep = () => {
-        const {i, j} = currentPosition;
+        const {i, j} = position.current;
         if (data[i] > data[j]) {
             swap(data, i, j);
             setIsSwapHappened(true);
@@ -54,13 +55,17 @@ const BubbleSort = (props) => {
 
     useEffect(() => {
         if (isSortRunning) {
-            setTimeout(performSortStep, intervalSpeed);
+            const currentIntervalId = setInterval(performSortStep, intervalSpeed);
+            updateIntervalId(currentIntervalId);
+            return () => clearInterval(currentIntervalId);
+        } else {
+            clearInterval(intervalId);
         }
-    }, [currentPosition, isSortRunning]);
+    }, [isSortRunning, intervalSpeed]);
 
     const getIndicesToHighlight = () => {
         if (isSortRunning) {
-            const {i, j} = currentPosition;
+            const {i, j} = position.current;
             return [i, j];
         }
         return [];

@@ -6,7 +6,8 @@ import '../../../App.css';
 
 const InsertionSort = (props) => {
     const iterationCount = useRef(0);
-    const [currentPosition, updateCurrentPosition] = useState({i: 0, j: 1});
+    const position = useRef({i: 0, j: 1});
+    const [intervalId, updateIntervalId] = useState(null);
 
     const {
         data,
@@ -23,17 +24,17 @@ const InsertionSort = (props) => {
 
     const stopSorting = () => {
         updateIsSortRunning(false);
-        updateCurrentPosition({i: 0, j: 1});
+        position.current = {i: 0, j: 1};
         iterationCount.current = 0;
     };
 
     const updatePosition = (i, j) => {
         if (i >= 0 && j >= 0) {
             swap(data, i, j);
-            updateCurrentPosition({i: i - 1, j: j - 1});
+            position.current = {i: i - 1, j: j - 1};
         } else {
             iterationCount.current += 1;
-            updateCurrentPosition({i: iterationCount.current, j: iterationCount.current + 1});
+            position.current = {i: iterationCount.current, j: iterationCount.current + 1};
         }
     };
 
@@ -42,26 +43,30 @@ const InsertionSort = (props) => {
             stopSorting();
             return;
         }
-        const {i, j} = currentPosition;
+        const {i, j} = position.current;
         if (data[j] < data[i]) {
             updatePosition(j - 1, j);
         }
         else {
             iterationCount.current += 1;
-            updateCurrentPosition({i: iterationCount.current, j: iterationCount.current + 1});
+            position.current = {i: iterationCount.current, j: iterationCount.current + 1};
         }
         updateComparisonCount(comparisonCount => comparisonCount + 1);
     };
 
     useEffect(() => {
         if (isSortRunning) {
-            setTimeout(performSortStep, intervalSpeed);
+            const currentIntervalId = setInterval(performSortStep, intervalSpeed);
+            updateIntervalId(currentIntervalId);
+            return () => clearInterval(currentIntervalId);
+        } else {
+            clearInterval(intervalId);
         }
-    }, [currentPosition, isSortRunning]);
+    }, [isSortRunning, intervalSpeed]);
 
     const getIndicesToHighlight = () => {
         if (isSortRunning) {
-            const {i, j} = currentPosition;
+            const {i, j} = position.current;
             return [i, j];
         }
         return [];

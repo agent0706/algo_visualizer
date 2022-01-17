@@ -13,7 +13,7 @@ const Sort = (props => {
     } = props;
 
     const [dataSize, updateDataSize] = useState(50);
-    const [intervalSpeed, updateIntervalSpeed] = useState(20);
+    const [intervalSpeed, updateIntervalSpeed] = useState(100);
     const [isSortRunning, updateIsSortRunning] = useState(false);
     const [comparisonCount, updateComparisonCount] = useState(0);
     const data = useRef([]);
@@ -81,7 +81,7 @@ const Sort = (props => {
             <div style={{marginLeft: '40px'}}>{`${comparisonCount} comparisons`}</div>
             <div className="controls_container">
                 <div>
-                    <div>want to increase array size?</div>
+                    <div>want to change array size?</div>
                     <div className="array_size_container">
                         <input type="range" min={10} max={100} value={dataSize} onChange={handleDataSizeChange} />
                         <div style={{marginLeft: '10px'}}>{dataSize}</div>
@@ -89,7 +89,7 @@ const Sort = (props => {
                 </div>
                 <button className="button button_height" onClick={handleStartClick}>{isSortRunning ? 'Pause' : 'Start'}</button>
                 <div>
-                    <div>want to decrease speed?</div>
+                    <div>want to change speed?</div>
                     <input type="range" min={0} max={3} value={getIntervalValue()} onChange={handleIntervalChange} />
                 </div>
             </div>
