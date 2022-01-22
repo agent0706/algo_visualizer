@@ -32,7 +32,7 @@ const Sort = (props => {
             data: data.current,
             updateComparisonCount,
             updateIsSortRunning,
-            dataSize,
+            dataSize: +dataSize,
             isSortRunning,
             intervalSpeed
         };

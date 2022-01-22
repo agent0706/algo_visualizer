@@ -1,13 +1,13 @@
-import {useState, useEffect, useRef}  from 'react';
+import {useRef}  from 'react';
+import useSorting from '../useSorting';
 import {swap} from '../../../utils';
 import {BarChart} from '../../../components';
 import '../Sort.css';
 
 const BubbleSort = (props) => {
 
-    const [isSwapHappened, setIsSwapHappened] = useState(true);
+    const isSwapHappened = useRef(true);
     const position = useRef({i: 0, j: 1});
-    const [intervalId, updateIntervalId] = useState(null);
     const iterationCount = useRef(0);
 
     const {
@@ -20,23 +20,24 @@ const BubbleSort = (props) => {
     } = props;
 
     const shouldStopSorting = () => {
-        return !isSwapHappened;
+        return !isSwapHappened.current;
     };
 
     const stopSorting = () => {
         updateIsSortRunning(false);
+        isSwapHappened.current = false;
         position.current = {i: 0, j: 1};
         iterationCount.current = 0;
     };
     
     const updatePosition = (i, j) => {
-        if (j === dataSize - 1) {
+        if (j >= dataSize - 1 - iterationCount.current) {
             if (shouldStopSorting()) {
                 stopSorting();
                 return;
             }
             position.current = {i: 0, j: 1};
-            setIsSwapHappened(false);
+            isSwapHappened.current = false;
             iterationCount.current += 1;
             return;
         }
@@ -47,21 +48,19 @@ const BubbleSort = (props) => {
         const {i, j} = position.current;
         if (data[i] > data[j]) {
             swap(data, i, j);
-            setIsSwapHappened(true);
+            isSwapHappened.current = true;
         }
-        updateComparisonCount(comparisonCount => comparisonCount + 1);
         updatePosition(i, j);
+        updateComparisonCount(comparisonCount => comparisonCount + 1);
     };
 
-    useEffect(() => {
-        if (isSortRunning) {
-            const currentIntervalId = setInterval(performSortStep, intervalSpeed);
-            updateIntervalId(currentIntervalId);
-            return () => clearInterval(currentIntervalId);
-        } else {
-            clearInterval(intervalId);
-        }
-    }, [isSortRunning, intervalSpeed]);
+    useSorting({
+        isSortRunning,
+        intervalSpeed,
+        dataSize,
+        stopSorting,
+        performSortStep
+    });
 
     const getIndicesToHighlight = () => {
         if (isSortRunning) {
