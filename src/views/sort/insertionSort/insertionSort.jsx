@@ -1,5 +1,5 @@
 import {useRef} from 'react';
-import useSort from '../useSort';
+import useSorting from '../useSorting';
 import {swap} from '../../../utils';
 import {BarChart} from '../../../components';
 import '../Sort.css';
@@ -8,7 +8,6 @@ import '../../../App.css';
 const InsertionSort = (props) => {
     const iterationCount = useRef(0);
     const position = useRef({i: 0, j: 1});
-    const intervalId = useRef(null);
 
     const {
         data,
@@ -23,15 +22,10 @@ const InsertionSort = (props) => {
         return iterationCount.current >= dataSize;
     };
 
-    const clearSortInterval = () => {
-        clearInterval(intervalId.current);
-    };
-
     const stopSorting = () => {
         updateIsSortRunning(false);
         position.current = {i: 0, j: 1};
         iterationCount.current = 0;
-        clearSortInterval();
     };
 
     const updatePosition = (i, j) => {
@@ -60,17 +54,12 @@ const InsertionSort = (props) => {
         updateComparisonCount(comparisonCount => comparisonCount + 1);
     };
 
-    const startSorting = () => {
-        intervalId.current = setInterval(performSortStep, intervalSpeed);
-    };
-
-    useSort({
+    useSorting({
         isSortRunning,
         intervalSpeed,
         dataSize,
-        startSorting,
-        clearSortInterval,
-        stopSorting
+        stopSorting,
+        performSortStep
     });
 
     const getIndicesToHighlight = () => {
