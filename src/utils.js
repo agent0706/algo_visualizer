@@ -22,14 +22,14 @@ export class Stack {
         this.top = -1;
 
         if (value) {
-            this.data.push(value);
-            this.top = 0;
+            this.top += 1;
+            this.data[this.top] = value;
         }
     }
 
     push(value) {
-        this.data.push(value);
         this.top += 1;
+        this.data[this.top] = value;
     }
 
     pop() {

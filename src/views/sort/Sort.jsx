@@ -5,6 +5,7 @@ import '../../App.css';
 import BubbleSort from './bubbleSort';
 import SelectionSort from './selectionSort';
 import InsertionSort from './insertionSort';
+import QuickSort from './quickSort';
 import SelectAlgorithm from '../selectAlgorithm';
 
 const Sort = (props => {
@@ -45,6 +46,8 @@ const Sort = (props => {
                 return <SelectionSort {...getCommonProps()} />
             case 'insertionSort':
                 return <InsertionSort {...getCommonProps()} />
+            case 'quickSort':
+                return <QuickSort {...getCommonProps()} />
             default:
                 return <SelectAlgorithm />
         }

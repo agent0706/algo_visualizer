@@ -28,8 +28,10 @@ const useSorting = ({
     }, [isSortRunning, intervalSpeed]);
 
     useEffect(() => {
-        stopSorting();
-        clearSortInterval();
+        if (isSortRunning) {
+            stopSorting();
+            clearSortInterval();
+        }
     }, [dataSize]);
 };
 
