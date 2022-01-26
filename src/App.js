@@ -10,7 +10,8 @@ function App() {
     {name: 'Selection Sort', value: 'selectionSort'},
     {name: 'Bubble Sort', value: 'bubbleSort'},
     {name: 'Insertion Sort', value: 'insertionSort'},
-    {name: 'Quick Sort', value: 'quickSort'}
+    {name: 'Quick Sort', value: 'quickSort'},
+    {name: 'Merge Sort', value: 'mergeSort'}
   ]
 
   const renderAlgoView = () => {
@@ -19,6 +20,7 @@ function App() {
       case 'selectionSort':
       case 'insertionSort':
       case 'quickSort':
+      case 'mergeSort':
         return <Algos.Sort sortingAlgo={currentAlgo} />
       default:
         return <Algos.SelectAlgo />

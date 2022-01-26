@@ -24,7 +24,7 @@ const BarChart = (props) => {
                     height: `${heightPercent}%`,
                     width: `${widthPercent}%`
                 }}
-                key={`${num}${heightPercent}`}
+                key={`${num}${heightPercent}${index}`}
             />
         );
     };
